@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Student Report Card Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Canvas Confetti Library for Celebration -->
+    <script src="https://jsdelivr.net"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>Academic Performance Portal</h1>
+            <p>Generate, analyze, and print verified student report cards.</p>
+        </header>
+
+        <main class="main-content">
+            <!-- Input Form Section -->
+            <section class="card form-section">
+                <h2>Student & Marks Entry</h2>
+                <form id="reportForm" novalidate>
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label for="studentName">Student Full Name</label>
+                            <input type="text" id="studentName" required placeholder="John Doe">
+                        </div>
+                        <div class="input-group">
+                            <label for="className">Class / Grade</label>
+                            <input type="text" id="className" required placeholder="Grade 10-A">
+                        </div>
+                        <div class="input-group full-width">
+                            <label for="schoolName">School / Institution Name</label>
+                            <input type="text" id="schoolName" required placeholder="Excellence High School">
+                        </div>
+                    </div>
+
+                    <div class="subjects-header">
+                        <h3>Subject Scores (Max 100 per subject)</h3>
+                        <button type="button" id="addSubjectBtn" class="btn btn-secondary">+ Add Subject</button>
+                    </div>
+
+                    <div id="subjectsContainer" class="subjects-container">
+                        <!-- Dynamic rows will inject here -->
+                    </div>
+
+                    <button type="submit" class="btn btn-primary full-width">Generate Report Card</button>
+                </form>
+            </section>
+
+            <!-- Output Report Card Section -->
+            <section id="reportCardSection" class="card report-section hidden">
+                <div class="report-actions no-print">
+                    <button id="printBtn" class="btn btn-secondary">Print Report Card</button>
+                </div>
+                
+                <div id="printArea" class="print-area">
+                    <div class="report-header">
+                        <h2 id="outSchoolName">SCHOOL NAME</h2>
+                        <p class="report-title">OFFICIAL REPORT CARD</p>
+                    </div>
+
+                    <div class="student-meta-grid">
+                        <div><strong>Student Name:</strong> <span id="outStudentName"></span></div>
+                        <div><strong>Class:</strong> <span id="outClassName"></span></div>
+                        <div><strong>Date:</strong> <span id="outDate"></span></div>
+                    </div>
+
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th class="text-right">Marks Obtained</th>
+                                <th class="text-right">Max Marks</th>
+                                <th class="text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportTableBody">
+                            <!-- Dynamic rows inject here -->
+                        </tbody>
+                    </table>
+
+                    <div class="results-summary-grid">
+                        <div class="summary-box">
+                            <span class="summary-label">Total Marks</span>
+                            <span id="outTotal" class="summary-value">0</span>
+                        </div>
+                        <div class="summary-box">
+                            <span class="summary-label">Average / Percentage</span>
+                            <span id="outAverage" class="summary-value">0.00%</span>
+                        </div>
+                        <div id="statusCard" class="summary-box status-box">
+                            <span class="summary-label">Final Result</span>
+                            <span id="outStatus" class="summary-value">-</span>
+                        </div>
+                    </div>
+                    
+                    <div id="motivationalMessage" class="motivation-banner"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Speedster | Free Arcade Car Racing Game</title>
+    <meta name="description" content="Play Retro Speedster, a free high-speed browser car racing game. Dodge traffic, track high scores, and test your reflexes as speed increases!">
+    <meta name="keywords" content="car game, browser game, free racing game, arcade car game, play speedster, high score car game">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://example.com">
+    <!-- Linking external CSS styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Retro Speedster</h1>
+    </header>
+
+    <main class="game-container" id="gameContainer">
+        <!-- Live UI Dashboard -->
+        <div class="ui-panel">
+            <div>Score: <span id="scoreDisplay" class="score-display">0</span></div>
+            <div>Speed: <span id="speedDisplay" class="speed-display">100</span><small>km/h</small></div>
+            <div>HI: <span id="highDisplay" class="high-display">0</span></div>
+        </div>
+
+        <!-- Containers for elements spawned via JS -->
+        <div id="roadLinesContainer"></div>
+        <div id="enemiesContainer"></div>
+        <div id="player" class="player-car"></div>
+
+        <!-- Menu Screen Overlay -->
+        <div id="menuOverlay" class="screen-overlay">
+            <h2>Ready to Race?</h2>
+            <p class="instructions">Use <b>Left / Right Arrow Keys</b> or <b>A / D Keys</b> to steer your car. Avoid incoming vehicles!</p>
+            <p class="warning-text">Warning: Game speed increases over time.</p>
+            <button id="startBtn" class="btn">Start Race</button>
+        </div>
+
+        <!-- Game Over Screen Overlay -->
+        <div id="gameOverOverlay" class="screen-overlay hidden">
+            <h2 class="game-over-text">Crash!</h2>
+            <p>Your Score: <span id="finalScore" class="score-display" style="font-weight:bold;">0</span></p>
+            <p>All-Time High: <span id="finalHighScore" class="high-display" style="font-weight:bold;">0</span></p>
+            <div id="newHighScoreBadge" class="new-high-score-badge hidden">New Best Record!</div>
+            <button id="restartBtn" class="btn">Play Again</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Retro Speedster Arcade. All rights reserved.</p>
+    </footer>
+
+    <!-- Linking external JavaScript gameplay script -->
+    <script src="script.js"></script>
+</body>
+</html>
