@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Business Revenue & Tax Calculator</title>
+    <meta name="description" content="Calculate real-time business operational profits, margin revenues, GST collections, and net take-home earnings.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="report-container">
+        <header>
+            <h1>Real-Time Business Revenue Report</h1>
+            <p class="subtitle">Modify values below to instantly update financial calculations.</p>
+        </header>
+        
+        <!-- Interactive Inputs Section -->
+        <section class="card-section" aria-labelledby="inputs-heading">
+            <h2 id="inputs-heading">Adjust Operational Settings</h2>
+            <div class="input-group">
+                <label for="timeframe-select">Timeframe Selection:</label>
+                <select id="timeframe-select">
+                    <option value="custom" selected>Custom Days</option>
+                    <option value="weekly">Weekly Preset (7 Days)</option>
+                    <option value="month">Monthly Preset (30 Days)</option>
+                    <option value="year">Yearly Preset (365 Days)</option>
+                </select>
+            </div>
+
+            <div class="input-group" id="working-days-wrapper">
+                <label for="working-days">Working Days Context:</label>
+                <input type="number" id="working-days" value="2" min="1" max="365">
+            </div>
+
+            <div class="input-group">
+                <label for="customer-per-days">Daily Customer Footfall:</label>
+                <input type="number" id="customer-per-days" value="1000" min="0">
+            </div>
+
+            <div class="input-group">
+                <label for="profit-per-head">Base Profit Per Head (₹):</label>
+                <input type="number" id="profit-per-head" value="1000" min="0">
+            </div>
+
+            <div class="input-group">
+                <label for="margin-per-head">Margin Per Head (₹):</label>
+                <input type="number" id="margin-per-head" value="100" min="0">
+            </div>
+        </section>
+
+        <!-- Dynamic Output Calculation Matrix Section -->
+        <section class="card-section" aria-labelledby="results-heading">
+            <h2 id="results-heading">Calculated Financial Report</h2>
+            <div class="results-grid" id="calculation-results">
+                <!-- JavaScript automatically populates this grid -->
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

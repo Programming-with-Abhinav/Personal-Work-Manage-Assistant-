@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Abhinav Workshop</title>
+		<link rel="stylesheet" href="style/login.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+	</head>
+	<body>
+		<aside class="side-image">
+			<img src="assets/Login.png" alt="Workshop" />
+		</aside>
+		<div class="content">
+			<header>
+				<nav class="nav-bar-btn">
+					<button id="loginBtn" class="log-btn">Login</button>
+					<button id="registerBtn" class="reg-btn">Register</button>
+				</nav>
+			</header>
+			<main>
+				<form id="loginForm" class="card">
+					<div class="login-icon">
+						<i class="fa-solid fa-user"></i>
+					</div>
+					<div class="form-top">
+						<h2>Login</h2>
+						<p class="subtext">
+							Welcome back! Sign in to continue your journey.
+						</p>
+					</div>
+
+					<div class="name">
+						<span>Username or Gmail</span>
+						<input
+							type="email"
+							id="loginEmail"
+							placeholder="Username or Gmail"
+							autocomplete="email" />
+					</div>
+
+					<div class="passward">
+						<span>Passward</span>
+						<input
+							type="password"
+							id="loginPassword"
+							placeholder="Enter Your Passward"
+							autocomplete="current-password" />
+					</div>
+
+					<label class="show-pass">
+						<input type="checkbox" id="showLoginPassword" /> Show password
+					</label>
+
+					<div class="helper-row">
+						<button type="button" id="goToRegister" class="text-link">
+							Create an account
+						</button>
+						<button type="button" id="forgotPasswordLink" class="text-link">
+							Forgot password?
+						</button>
+					</div>
+
+					<button type="submit">Login</button>
+				</form>
+
+				<form id="registerForm" class="card hidden">
+					<div class="register-icon">
+						<i class="fa-solid fa-user-plus"></i>
+					</div>
+
+					<div class="form-top">
+						<h2>Create Account</h2>
+						<p class="subtext">
+							Create your account to get started with your journey.
+						</p>
+					</div>
+					<div class="name">
+						<span>Full Name:</span>
+						<input type="text" id="fullName" placeholder="Full Name" />
+					</div>
+					<div class="email">
+						<span>Enter Your Email:</span>
+						<input type="email" id="email" placeholder="Email" />
+					</div>
+					<div class="number">
+						<span>Phone Number:</span>
+						<input type="tel" id="phone" placeholder="Phone Number" />
+					</div>
+					<div class="passward">
+						<span>Passward</span>
+						<input type="password" id="password" placeholder="Password" />
+					</div>
+					<div class="retype-passward">
+						<span>Re-passward</span>
+						<input
+							type="password"
+							id="confirmPassword"
+							placeholder="Confirm Password" />
+					</div>
+
+					<label class="show-pass">
+						<input type="checkbox" id="showRegisterPassword" /> Show password
+					</label>
+
+					<div class="helper-row">
+						<button type="button" id="goToLogin" class="text-link">
+							I already have an account
+						</button>
+					</div>
+
+					<button type="submit">Register</button>
+				</form>
+			</main>
+			<footer></footer>
+		</div>
+		<script src="script/auth.js" defer></script>
+	</body>
+</html>

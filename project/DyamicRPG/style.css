@@ -1,0 +1,205 @@
+:root {
+    --bg-dark: #0f141c;
+    --card-bg: #1a2333;
+    --text-primary: #f0f4f8;
+    --text-muted: #8ba2b5;
+    --color-attack: #ff4a5a;
+    --color-magic: #a855f7;
+    --color-heal: #22c55e;
+    --color-block: #3b82f6;
+    --font-heading: 'Press Start 2P', monospace;
+    --font-body: 'Share Tech Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+header {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+header h1 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: #ffd700;
+    text-shadow: 3px 3px 0px #000;
+    word-break: break-word;
+}
+
+.score-tracker {
+    font-size: 1.2rem;
+    color: #ffd700;
+    margin-top: 0.5rem;
+}
+
+.game-container {
+    max-width: 800px;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.battlefield {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.character-card {
+    background-color: var(--card-bg);
+    border: 3px solid #334155;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+.character-card h2 {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #334155;
+    padding-bottom: 0.5rem;
+}
+
+.stat-group {
+    margin-bottom: 0.8rem;
+}
+
+.stat-group label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+}
+
+.meter-container {
+    width: 100%;
+    background: #0f172a;
+    border-radius: 4px;
+    padding: 2px;
+    border: 1px solid #475569;
+}
+
+meter {
+    width: 100%;
+    height: 18px;
+    display: block;
+}
+
+/* Custom color overrides for webkit meters */
+.meter-container.mana meter::-webkit-meter-optimum-value {
+    background: #3b82f6;
+}
+
+.status-badges {
+    min-height: 28px;
+}
+
+.badge {
+    display: inline-block;
+    background: #1e293b;
+    border: 1px solid #475569;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.btn {
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.1s ease, filter 0.2s ease;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn:disabled {
+    filter: grayscale(80%) brightness(60%);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-attack { background-color: var(--color-attack); }
+.btn-magic { background-color: var(--color-magic); }
+.btn-heal { background-color: var(--color-heal); }
+.btn-block { background-color: var(--color-block); }
+
+.btn-reset {
+    background-color: #f59e0b;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.log-section {
+    background-color: #0b0f17;
+    border: 2px solid #1e293b;
+    border-radius: 6px;
+    padding: 1rem;
+}
+
+.log-section h3 {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.log-box {
+    height: 150px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-right: 0.5rem;
+}
+
+.log-entry {
+    padding: 0.2rem 0;
+    border-bottom: 1px dashed #1e293b;
+}
+
+.system-msg { color: #38bdf8; }
+.hero-msg { color: #4ade80; }
+.boss-msg { color: #f87171; }
+
+.hidden {
+    display: none !important;
+}
+
+footer {
+    text-align: center;
+    margin-top: auto;
+    padding: 1.5rem 0 0 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}

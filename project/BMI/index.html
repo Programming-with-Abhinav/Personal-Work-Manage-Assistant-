@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Core SEO Meta Tags -->
+    <title>Personalized Digital Health Tracker & BMI Calorie Calculator</title>
+    <meta name="description" content="Calculate your body mass index (BMI), evaluate health zones, and find your recommended daily calorie targets using custom metric options.">
+    <link rel="canonical" href="https://yourdomain.com">
+
+    <!-- Open Graph Meta Tags (For Social Media Shares: Facebook, LinkedIn) -->
+    <meta property="og:title" content="Digital Health Tracker & BMI Calculator">
+    <meta property="og:description" content="Calculate your body mass index (BMI) and recommended daily calorie targets dynamically.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com">
+
+    <!-- Google Structured Data (JSON-LD) - Absolute Best for Ranking -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Personalized Digital Health Tracker",
+      "description": "An interactive digital terminal to calculate custom BMI metrics, baseline health zones, and daily calorie targets.",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="app-container">
+        <!-- Using semantic HTML5 article element -->
+        <article id="healthCard" class="card default-zone">
+            <header>
+                <h1>Personalized Digital Health Tracker</h1>
+                <p class="subtitle">Enter your physical metrics to calculate baseline health zones</p>
+            </header>
+            
+            <!-- Accessible Form structure -->
+            <form id="trackerForm" novalidate>
+                
+                <!-- Weight Inputs -->
+                <div class="input-group">
+                    <label for="weight">Weight Metric</label>
+                    <div class="row">
+                        <input type="number" id="weight" placeholder="e.g., 70" step="any" required aria-required="true">
+                        <select id="weightUnit" aria-label="Select Weight Unit">
+                            <option value="kg">kg</option>
+                            <option value="g">g</option>
+                            <option value="lbs">lbs</option>
+                        </select>
+                    </div>
+                    <!-- Empty container for dynamic accessibility error strings -->
+                    <span id="weightError" class="error-msg" aria-live="polite"></span>
+                </div>
+
+                <!-- Height Inputs -->
+                <div class="input-group">
+                    <label for="height">Height Metric</label>
+                    <div class="row">
+                        <input type="number" id="height" placeholder="e.g., 1.75" step="any" required aria-required="true">
+                        <select id="heightUnit" aria-label="Select Height Unit">
+                            <option value="m">meters</option>
+                            <option value="cm">cm</option>
+                            <option value="in">inches</option>
+                        </select>
+                    </div>
+                    <span id="heightError" class="error-msg" aria-live="polite"></span>
+                </div>
+
+                <!-- Activity Input -->
+                <div class="input-group">
+                    <label for="activity">Daily Activity Level</label>
+                    <select id="activity" aria-label="Select Daily Activity Level">
+                        <option value="sedentary">Sedentary (Minimal movement)</option>
+                        <option value="active">Active (Regular exercise)</option>
+                    </select>
+                </div>
+
+                <button type="submit" id="calculateBtn">Calculate Health Zones</button>
+            </form>
+
+            <!-- Aria-live updates screen readers automatically when numbers change -->
+            <section class="results-section" aria-live="polite">
+                <h2>Your Personalized Metrics Summary</h2>
+                <div class="result-item">
+                    <span>BMI Status:</span>
+                    <strong id="bmiResult">--</strong>
+                </div>
+                <div class="result-item">
+                    <span>Daily Calorie Target:</span>
+                    <strong id="calorieResult">--</strong>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <script src="AI_script.js"></script>
+</body>
+</html>
