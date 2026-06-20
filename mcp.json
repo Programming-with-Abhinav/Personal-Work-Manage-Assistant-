@@ -1,0 +1,34 @@
+{
+  "mcpServers": {
+    "browser-puppeteer": {
+      "command": "npx.cmd",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ]
+    },
+    "ai-memory": {
+      "command": "npx.cmd",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ]
+    },
+    "desktop-files": {
+      "command": "npx.cmd",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "C:\\Users\\abhin_a6axq8n\\OneDrive\\Desktop"
+      ]
+    },
+    "local-database": {
+      "command": "npx.cmd",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sqlite",
+        "C:\\Users\\abhin_a6axq8n\\OneDrive\\Desktop\\Personal Wrok Assitance\\database.sqlite"
+      ]
+    }
+  }
+}
