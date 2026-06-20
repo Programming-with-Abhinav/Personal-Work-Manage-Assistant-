@@ -1,133 +1,86 @@
 const loginBtn = document.getElementById("loginBtn");
 const registerBtn = document.getElementById("registerBtn");
+const navBar = document.getElementById("navBar");
+
 const loginForm = document.getElementById("loginForm");
 const registerForm = document.getElementById("registerForm");
+const verifyForm = document.getElementById("verifyForm");
+const resetPasswordForm = document.getElementById("resetPasswordForm");
 
 const forgotPasswordLink = document.getElementById("forgotPasswordLink");
 const goToRegister = document.getElementById("goToRegister");
 const goToLogin = document.getElementById("goToLogin");
+const backToLoginFromVerify = document.getElementById("backToLoginFromVerify");
+const cancelReset = document.getElementById("cancelReset");
 
 const showLoginPassword = document.getElementById("showLoginPassword");
 const showRegisterPassword = document.getElementById("showRegisterPassword");
-const profileImageInput = document.getElementById("profileImage");
-const avatarPreview = document.getElementById("avatarPreview");
-const removeAvatarBtn = document.getElementById("removeAvatarBtn");
+const showResetPassword = document.getElementById("showResetPassword");
+
+let resetEmail = ""; // To store the email for resetting password
 
 function showForm(mode) {
-  const isLogin = mode === "login";
+  // mode can be 'login', 'register', 'verify', 'reset'
+  
+  // Update nav buttons
+  if (mode === "login" || mode === "register") {
+    if (navBar) navBar.style.display = "flex";
+    loginBtn.classList.toggle("active", mode === "login");
+    registerBtn.classList.toggle("active", mode === "register");
+  } else {
+    if (navBar) navBar.style.display = "none";
+  }
 
-  loginBtn.classList.toggle("active", isLogin);
-  registerBtn.classList.toggle("active", !isLogin);
-
-  loginForm.classList.toggle("hidden", !isLogin);
-  registerForm.classList.toggle("hidden", isLogin);
+  // Toggle forms
+  loginForm.classList.toggle("hidden", mode !== "login");
+  registerForm.classList.toggle("hidden", mode !== "register");
+  if (verifyForm) verifyForm.classList.toggle("hidden", mode !== "verify");
+  if (resetPasswordForm) resetPasswordForm.classList.toggle("hidden", mode !== "reset");
 }
 
-loginBtn.addEventListener("click", () => {
-  setHeaderPosition();
-  showForm("login");
-});
-
-registerBtn.addEventListener("click", () => {
-  setHeaderPosition();
-  showForm("register");
-});
-
-goToRegister?.addEventListener("click", () => {
-  setHeaderPosition();
-  showForm("register");
-});
-
-goToLogin?.addEventListener("click", () => {
-  setHeaderPosition();
-  showForm("login");
-});
+loginBtn.addEventListener("click", () => showForm("login"));
+registerBtn.addEventListener("click", () => showForm("register"));
+goToRegister?.addEventListener("click", () => showForm("register"));
+goToLogin?.addEventListener("click", () => showForm("login"));
+forgotPasswordLink?.addEventListener("click", () => showForm("verify"));
+backToLoginFromVerify?.addEventListener("click", () => showForm("login"));
+cancelReset?.addEventListener("click", () => showForm("login"));
 
 showLoginPassword?.addEventListener("change", () => {
   const passwordField = document.getElementById("loginPassword");
-  passwordField.type = showLoginPassword.checked ? "text" : "password";
+  if (passwordField) passwordField.type = showLoginPassword.checked ? "text" : "password";
 });
 
 showRegisterPassword?.addEventListener("change", () => {
   const passwordField = document.getElementById("password");
   const confirmField = document.getElementById("confirmPassword");
-  passwordField.type = showRegisterPassword.checked ? "text" : "password";
-  confirmField.type = showRegisterPassword.checked ? "text" : "password";
+  if (passwordField) passwordField.type = showRegisterPassword.checked ? "text" : "password";
+  if (confirmField) confirmField.type = showRegisterPassword.checked ? "text" : "password";
 });
 
-forgotPasswordLink?.addEventListener("click", (e) => {
-  e.preventDefault();
-
-  const email = prompt("Enter your email address:");
-  if (!email) return;
-
-  const users = JSON.parse(localStorage.getItem("users")) || [];
-  const user = users.find(
-    (u) => u.email.trim().toLowerCase() === email.trim().toLowerCase()
-  );
-
-  if (!user) {
-    alert("No account found with this email.");
-    return;
-  }
-
-  const newPassword = prompt("Enter your new password:");
-  if (!newPassword || newPassword.length < 4) {
-    alert("Password must be at least 4 characters.");
-    return;
-  }
-
-  user.password = newPassword;
-  localStorage.setItem("users", JSON.stringify(users));
-  alert("Password updated successfully. Please login with your new password.");
-  showForm("login");
+showResetPassword?.addEventListener("change", () => {
+  const passwordField = document.getElementById("newPassword");
+  const confirmField = document.getElementById("confirmNewPassword");
+  if (passwordField) passwordField.type = showResetPassword.checked ? "text" : "password";
+  if (confirmField) confirmField.type = showResetPassword.checked ? "text" : "password";
 });
 
+// Initialize to login form
 showForm("login");
 
-function fileToDataUrl(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
-
-function setAvatarPreview(file) {
-  if (!file) {
-    avatarPreview.src = "assets/ID-photo.png";
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = () => {
-    avatarPreview.src = reader.result;
-  };
-  reader.readAsDataURL(file);
-}
-
-profileImageInput?.addEventListener("change", (e) => {
-  const file = e.target.files?.[0];
-  setAvatarPreview(file);
-});
-
-removeAvatarBtn?.addEventListener("click", () => {
-  profileImageInput.value = "";
-  avatarPreview.src = "assets/ID-photo.png";
-});
-
-registerForm.addEventListener("submit", async function (e) {
+// --- REGISTRATION LOGIC ---
+registerForm?.addEventListener("submit", function (e) {
   e.preventDefault();
 
   const name = document.getElementById("fullName").value.trim();
   const email = document.getElementById("email").value.trim();
   const phone = document.getElementById("phone").value.trim();
+  const pincode = document.getElementById("pincode").value.trim();
   const password = document.getElementById("password").value;
   const confirmPassword = document.getElementById("confirmPassword").value;
 
-  if (!name || !email || !password) {
-    alert("Please fill all required fields.");
+  if (!name || !email || !password || !pincode) {
+    alert("Please fill all required fields (including Pincode).");
     return;
   }
 
@@ -144,23 +97,14 @@ registerForm.addEventListener("submit", async function (e) {
     return;
   }
 
-  let avatar = "";
-  if (profileImageInput?.files?.length) {
-    try {
-      avatar = await fileToDataUrl(profileImageInput.files[0]);
-    } catch (error) {
-      alert("Could not read the selected image.");
-      return;
-    }
-  }
-
   const newUser = {
     id: Date.now(),
     name,
     email,
     phone,
+    pincode,
     password,
-    avatar,
+    avatar: "", // Keeping avatar field for backward compatibility
     createdAt: new Date().toLocaleString()
   };
 
@@ -171,7 +115,8 @@ registerForm.addEventListener("submit", async function (e) {
   window.location.href = "home.html";
 });
 
-loginForm.addEventListener("submit", function (e) {
+// --- LOGIN LOGIC ---
+loginForm?.addEventListener("submit", function (e) {
   e.preventDefault();
 
   const email = document.getElementById("loginEmail").value.trim();
@@ -189,11 +134,67 @@ loginForm.addEventListener("submit", function (e) {
   window.location.href = "home.html";
 });
 
-function setHeaderPosition() {
-  const header = document.querySelector("header");
-  if (header) {
-    header.style.position = "absolute";
-    header.style.top = "18px";
-    header.style.left = "30px";
+// --- VERIFY FORGOT PASSWORD LOGIC ---
+verifyForm?.addEventListener("submit", function (e) {
+  e.preventDefault();
+  
+  const email = document.getElementById("verifyEmail").value.trim();
+  const pincode = document.getElementById("verifyPincode").value.trim();
+  
+  if (!email || !pincode) {
+    alert("Please enter both Email and Pincode.");
+    return;
   }
-}
+
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+  const user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && String(u.pincode) === pincode);
+  
+  if (!user) {
+    alert("Verification failed. Incorrect email or pincode.");
+    return;
+  }
+  
+  // Match found! Proceed to reset form
+  resetEmail = email.toLowerCase();
+  showForm("reset");
+});
+
+// --- RESET PASSWORD LOGIC ---
+resetPasswordForm?.addEventListener("submit", function (e) {
+  e.preventDefault();
+  
+  const newPassword = document.getElementById("newPassword").value;
+  const confirmNewPassword = document.getElementById("confirmNewPassword").value;
+  
+  if (!newPassword || newPassword.length < 4) {
+    alert("Password must be at least 4 characters.");
+    return;
+  }
+  
+  if (newPassword !== confirmNewPassword) {
+    alert("New passwords do not match.");
+    return;
+  }
+  
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+  const userIndex = users.findIndex(u => u.email.toLowerCase() === resetEmail);
+  
+  if (userIndex === -1) {
+    alert("Error: User not found.");
+    return;
+  }
+  
+  // Update password
+  users[userIndex].password = newPassword;
+  localStorage.setItem("users", JSON.stringify(users));
+  
+  alert("Password updated successfully! Please login with your new password.");
+  
+  // Clear reset form fields
+  document.getElementById("newPassword").value = "";
+  document.getElementById("confirmNewPassword").value = "";
+  document.getElementById("verifyEmail").value = "";
+  document.getElementById("verifyPincode").value = "";
+  
+  showForm("login");
+});

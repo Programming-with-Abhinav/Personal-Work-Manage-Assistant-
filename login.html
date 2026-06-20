@@ -10,13 +10,10 @@
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 	</head>
 	<body>
-		<aside class="side-image">
-			<img src="assets/Login.png" alt="Workshop" />
-		</aside>
 		<div class="content">
 			<header>
-				<nav class="nav-bar-btn">
-					<button id="loginBtn" class="log-btn">Login</button>
+				<nav class="nav-bar-btn" id="navBar">
+					<button id="loginBtn" class="log-btn active">Login</button>
 					<button id="registerBtn" class="reg-btn">Register</button>
 				</nav>
 			</header>
@@ -42,11 +39,11 @@
 					</div>
 
 					<div class="passward">
-						<span>Passward</span>
+						<span>Password</span>
 						<input
 							type="password"
 							id="loginPassword"
-							placeholder="Enter Your Passward"
+							placeholder="Enter Your Password"
 							autocomplete="current-password" />
 					</div>
 
@@ -89,12 +86,16 @@
 						<span>Phone Number:</span>
 						<input type="tel" id="phone" placeholder="Phone Number" />
 					</div>
+					<div class="number">
+						<span>Pincode (for recovery):</span>
+						<input type="text" id="pincode" placeholder="Set a 4 or 6 digit Pincode" />
+					</div>
 					<div class="passward">
-						<span>Passward</span>
+						<span>Password</span>
 						<input type="password" id="password" placeholder="Password" />
 					</div>
 					<div class="retype-passward">
-						<span>Re-passward</span>
+						<span>Re-password</span>
 						<input
 							type="password"
 							id="confirmPassword"
@@ -113,6 +114,74 @@
 
 					<button type="submit">Register</button>
 				</form>
+
+				<form id="verifyForm" class="card hidden">
+					<div class="login-icon">
+						<i class="fa-solid fa-shield-halved"></i>
+					</div>
+
+					<div class="form-top">
+						<h2>Verify Identity</h2>
+						<p class="subtext">
+							Enter your registered email and recovery pincode.
+						</p>
+					</div>
+					
+					<div class="email">
+						<span>Registered Email:</span>
+						<input type="email" id="verifyEmail" placeholder="Email" />
+					</div>
+					<div class="number">
+						<span>Recovery Pincode:</span>
+						<input type="text" id="verifyPincode" placeholder="Pincode" />
+					</div>
+
+					<div class="helper-row">
+						<button type="button" id="backToLoginFromVerify" class="text-link">
+							Back to Login
+						</button>
+					</div>
+
+					<button type="submit">Verify</button>
+				</form>
+
+				<form id="resetPasswordForm" class="card hidden">
+					<div class="login-icon">
+						<i class="fa-solid fa-key"></i>
+					</div>
+
+					<div class="form-top">
+						<h2>Reset Password</h2>
+						<p class="subtext">
+							Please enter your new password.
+						</p>
+					</div>
+					
+					<div class="passward">
+						<span>New Password:</span>
+						<input type="password" id="newPassword" placeholder="New Password" />
+					</div>
+					<div class="retype-passward">
+						<span>Confirm New Password:</span>
+						<input
+							type="password"
+							id="confirmNewPassword"
+							placeholder="Confirm New Password" />
+					</div>
+
+					<label class="show-pass">
+						<input type="checkbox" id="showResetPassword" /> Show password
+					</label>
+
+					<div class="helper-row">
+						<button type="button" id="cancelReset" class="text-link">
+							Cancel
+						</button>
+					</div>
+
+					<button type="submit">Update Password</button>
+				</form>
+
 			</main>
 			<footer></footer>
 		</div>
