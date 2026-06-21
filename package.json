@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/abhinavsingh25039-glitch/MY-fav-Site#readme",
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^4.18.2",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5"
   }
 }
