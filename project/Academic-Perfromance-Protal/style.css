@@ -1,285 +1,331 @@
 :root {
-    --primary: #2563eb;
-    --primary-hover: #1d4ed8;
-    --success: #16a34a;
-    --success-bg: #f0fdf4;
-    --danger: #dc2626;
-    --danger-bg: #fef2f2;
-    --text-main: #1f2937;
-    --text-muted: #4b5563;
-    --bg-app: #f3f4f6;
-    --bg-card: #ffffff;
-    --border: #e5e7eb;
-    --radius: 8px;
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	--primary: #2563eb;
+	--primary-hover: #1d4ed8;
+	--success: #16a34a;
+	--success-bg: #f0fdf4;
+	--danger: #dc2626;
+	--danger-bg: #fef2f2;
+	--text-main: #1f2937;
+	--text-muted: #4b5563;
+	--bg-app: #f3f4f6;
+	--bg-card: #ffffff;
+	--border: #e5e7eb;
+	--radius: 8px;
+	--shadow:
+		0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
 body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-color: var(--bg-app);
-    color: var(--text-main);
-    line-height: 1.5;
-    padding: 2rem 1rem;
+	font-family:
+		system-ui,
+		-apple-system,
+		BlinkMacSystemFont,
+		"Segoe UI",
+		Roboto,
+		sans-serif;
+	background-color: var(--bg-app);
+	color: var(--text-main);
+	line-height: 1.5;
+	padding: 2rem 1rem;
 }
 
 .app-container {
-    max-width: 1100px;
-    margin: 0 auto;
+	max-width: 1100px;
+	margin: 0 auto;
 }
 
 .app-header {
-    text-align: center;
-    margin-bottom: 2rem;
+	text-align: center;
+	margin-bottom: 2rem;
 }
 
 .app-header h1 {
-    color: var(--primary);
-    font-size: 2.25rem;
-    margin-bottom: 0.5rem;
+	color: var(--primary);
+	font-size: 2.25rem;
+	margin-bottom: 0.5rem;
 }
 
 .app-header p {
-    color: var(--text-muted);
+	color: var(--text-muted);
 }
 
 .main-content {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 2rem;
 }
 
 @media (min-width: 768px) {
-    .main-content {
-        grid-template-columns: 1fr 1fr;
-    }
+	.main-content {
+		grid-template-columns: 1fr 1fr;
+	}
 }
 
 .card {
-    background: var(--bg-card);
-    padding: 2rem;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    border: 1px solid var(--border);
-    height: fit-content;
+	background: var(--bg-card);
+	padding: 2rem;
+	border-radius: var(--radius);
+	box-shadow: var(--shadow);
+	border: 1px solid var(--border);
+	height: fit-content;
 }
 
 h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    border-bottom: 2px solid var(--border);
-    padding-bottom: 0.5rem;
+	font-size: 1.5rem;
+	margin-bottom: 1.5rem;
+	border-bottom: 2px solid var(--border);
+	padding-bottom: 0.5rem;
 }
 
 /* Form Styles */
 .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+	margin-bottom: 1.5rem;
 }
 
 .full-width {
-    grid-column: span 2;
+	grid-column: span 2;
 }
 
 .input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.375rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.375rem;
 }
 
 label {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--text-muted);
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: var(--text-muted);
 }
 
 input {
-    padding: 0.625rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.2s;
+	padding: 0.625rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	font-size: 1rem;
+	outline: none;
+	transition: border-color 0.2s;
 }
 
 input:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+	border-color: var(--primary);
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 /* Dynamic Subject Rows */
 .subjects-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 2rem 0 1rem 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 2rem 0 1rem 0;
 }
 
 .subject-row {
-    display: grid;
-    grid-template-columns: 2fr 1fr auto;
-    gap: 0.75rem;
-    align-items: center;
-    margin-bottom: 0.75rem;
+	display: grid;
+	grid-template-columns: 2fr 1fr auto;
+	gap: 0.75rem;
+	align-items: center;
+	margin-bottom: 0.75rem;
 }
 
 /* Buttons */
 .btn {
-    padding: 0.625rem 1.25rem;
-    border: none;
-    border-radius: var(--radius);
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
+	padding: 0.625rem 1.25rem;
+	border: none;
+	border-radius: var(--radius);
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.2s;
 }
 
 .btn-primary {
-    background: var(--primary);
-    color: white;
+	background: var(--primary);
+	color: white;
 }
 
 .btn-primary:hover {
-    background: var(--primary-hover);
+	background: var(--primary-hover);
 }
 
 .btn-secondary {
-    background: #f3f4f6;
-    color: var(--text-main);
-    border: 1px solid var(--border);
+	background: #f3f4f6;
+	color: var(--text-main);
+	border: 1px solid var(--border);
 }
 
 .btn-secondary:hover {
-    background: #e5e7eb;
+	background: #e5e7eb;
 }
 
 .btn-danger {
-    background: white;
-    color: var(--danger);
-    border: 1px solid var(--border);
-    padding: 0.625rem;
+	background: white;
+	color: var(--danger);
+	border: 1px solid var(--border);
+	padding: 0.625rem;
 }
 
 .btn-danger:hover {
-    background: var(--danger-bg);
-    border-color: var(--danger);
+	background: var(--danger-bg);
+	border-color: var(--danger);
 }
 
 /* Report Output Card */
 .hidden {
-    display: none !important;
+	display: none !important;
 }
 
 .report-actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 1rem;
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 1rem;
 }
 
 .print-area {
-    border: 2px dashed var(--border);
-    padding: 1.5rem;
-    border-radius: var(--radius);
+	border: 2px dashed var(--border);
+	padding: 1.5rem;
+	border-radius: var(--radius);
 }
 
 .report-header {
-    text-align: center;
-    margin-bottom: 1.5rem;
+	text-align: center;
+	margin-bottom: 1.5rem;
 }
 
 .report-title {
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: var(--text-muted);
-    font-size: 0.875rem;
+	font-weight: 700;
+	letter-spacing: 1px;
+	color: var(--text-muted);
+	font-size: 0.875rem;
 }
 
 .student-meta-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-    font-size: 0.95rem;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.5rem;
+	margin-bottom: 1.5rem;
+	font-size: 0.95rem;
 }
 
 .report-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 1.5rem;
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 1.5rem;
 }
 
-.report-table th, .report-table td {
-    border-bottom: 1px solid var(--border);
-    padding: 0.75rem 0.5rem;
-    text-align: left;
+.report-table th,
+.report-table td {
+	border-bottom: 1px solid var(--border);
+	padding: 0.75rem 0.5rem;
+	text-align: left;
 }
 
-.text-right { text-align: right !important; }
-.text-center { text-align: center !important; }
+.text-right {
+	text-align: right !important;
+}
+.text-center {
+	text-align: center !important;
+}
 
 .badge {
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 700;
+	padding: 0.25rem 0.5rem;
+	border-radius: 4px;
+	font-size: 0.75rem;
+	font-weight: 700;
 }
 
-.badge-pass { background: var(--success-bg); color: var(--success); }
-.badge-fail { background: var(--danger-bg); color: var(--danger); }
+.badge-pass {
+	background: var(--success-bg);
+	color: var(--success);
+}
+.badge-fail {
+	background: var(--danger-bg);
+	color: var(--danger);
+}
 
 .results-summary-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 0.75rem;
+	margin-bottom: 1.5rem;
 }
 
 .summary-box {
-    background: var(--bg-app);
-    padding: 0.75rem;
-    border-radius: var(--radius);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
+	background: var(--bg-app);
+	padding: 0.75rem;
+	border-radius: var(--radius);
+	text-align: center;
+	display: flex;
+	flex-direction: column;
 }
 
 .summary-label {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    font-weight: 600;
+	font-size: 0.75rem;
+	color: var(--text-muted);
+	text-transform: uppercase;
+	font-weight: 600;
 }
 
 .summary-value {
-    font-size: 1.25rem;
-    font-weight: 700;
+	font-size: 1.25rem;
+	font-weight: 700;
 }
 
-.status-passed { background: var(--success-bg); color: var(--success); }
-.status-failed { background: var(--danger-bg); color: var(--danger); }
+.status-passed {
+	background: var(--success-bg);
+	color: var(--success);
+}
+.status-failed {
+	background: var(--danger-bg);
+	color: var(--danger);
+}
 
 .motivation-banner {
-    text-align: center;
-    font-weight: 600;
-    padding: 0.75rem;
-    border-radius: var(--radius);
+	text-align: center;
+	font-weight: 600;
+	padding: 0.75rem;
+	border-radius: var(--radius);
 }
 
-.motivation-banner.pass { color: var(--success); background: var(--success-bg); }
-.motivation-banner.fail { color: var(--danger); background: var(--danger-bg); }
+.motivation-banner.pass {
+	color: var(--success);
+	background: var(--success-bg);
+}
+.motivation-banner.fail {
+	color: var(--danger);
+	background: var(--danger-bg);
+}
 
 /* Print Media Query */
 @media print {
-    body { background: white; padding: 0; }
-    .no-print, .form-section, .app-header { display: none !important; }
-    .main-content { grid-template-columns: 1fr; }
-    .card { border: none; box-shadow: none; padding: 0; }
-    .print-area { border: none; padding: 0; }
+	body {
+		background: white;
+		padding: 0;
+	}
+	.no-print,
+	.form-section,
+	.app-header {
+		display: none !important;
+	}
+	.main-content {
+		grid-template-columns: 1fr;
+	}
+	.card {
+		border: none;
+		box-shadow: none;
+		padding: 0;
+	}
+	.print-area {
+		border: none;
+		padding: 0;
+	}
 }

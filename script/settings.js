@@ -4,23 +4,23 @@
  */
 
 class SettingsModule {
-  constructor(app) {
-    this.app = app;
-    this.init();
-  }
+	constructor(app) {
+		this.app = app;
+		this.init();
+	}
 
-  init() {
-    this.renderSettings();
-    this.setupEventListeners();
-  }
+	init() {
+		this.renderSettings();
+		this.setupEventListeners();
+	}
 
-  renderSettings() {
-    const container = document.getElementById('settingsContainer');
-    if (!container) return;
+	renderSettings() {
+		const container = document.getElementById("settingsContainer");
+		if (!container) return;
 
-    const user = this.app.currentUser;
+		const user = this.app.currentUser;
 
-    container.innerHTML = `
+		container.innerHTML = `
       <div style="max-width: 600px;">
         <!-- Profile Settings -->
         <div class="card" style="margin-bottom: 24px;">
@@ -90,96 +90,105 @@ class SettingsModule {
         </div>
       </div>
     `;
-  }
+	}
 
-  setupEventListeners() {
-    const saveProfileBtn = document.getElementById('saveProfileBtn');
-    if (saveProfileBtn) {
-      saveProfileBtn.addEventListener('click', () => this.saveProfile());
-    }
+	setupEventListeners() {
+		const saveProfileBtn = document.getElementById("saveProfileBtn");
+		if (saveProfileBtn) {
+			saveProfileBtn.addEventListener("click", () => this.saveProfile());
+		}
 
-    const themeRadios = document.querySelectorAll('input[name="theme"]');
-    themeRadios.forEach(radio => {
-      radio.addEventListener('change', (e) => this.changeTheme(e.target.value));
-    });
+		const themeRadios = document.querySelectorAll('input[name="theme"]');
+		themeRadios.forEach((radio) => {
+			radio.addEventListener("change", (e) => this.changeTheme(e.target.value));
+		});
 
-    const exportBtn = document.getElementById('exportDataBtn');
-    if (exportBtn) {
-      exportBtn.addEventListener('click', () => this.exportData());
-    }
+		const exportBtn = document.getElementById("exportDataBtn");
+		if (exportBtn) {
+			exportBtn.addEventListener("click", () => this.exportData());
+		}
 
-    const logoutAllBtn = document.getElementById('logoutAllBtn');
-    if (logoutAllBtn) {
-      logoutAllBtn.addEventListener('click', () => this.app.logout());
-    }
-  }
+		const logoutAllBtn = document.getElementById("logoutAllBtn");
+		if (logoutAllBtn) {
+			logoutAllBtn.addEventListener("click", () => this.app.logout());
+		}
+	}
 
-  async saveProfile() {
-    const username = document.getElementById('usernameInput').value;
-    const bio = document.getElementById('bioInput').value;
+	async saveProfile() {
+		const username = document.getElementById("usernameInput").value;
+		const bio = document.getElementById("bioInput").value;
 
-    try {
-      const response = await fetch(`/api/auth/profile/${this.app.currentUser.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, bio })
-      });
+		try {
+			const response = await fetch(
+				`/api/auth/profile/${this.app.currentUser.id}`,
+				{
+					method: "PUT",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ username, bio }),
+				},
+			);
 
-      if (response.ok) {
-        alert('Profile updated successfully!');
-        location.reload();
-      }
-    } catch (error) {
-      console.error('Error saving profile:', error);
-      alert('Failed to save profile');
-    }
-  }
+			if (response.ok) {
+				alert("Profile updated successfully!");
+				location.reload();
+			}
+		} catch (error) {
+			console.error("Error saving profile:", error);
+			alert("Failed to save profile");
+		}
+	}
 
-  changeTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  }
+	changeTheme(theme) {
+		document.documentElement.setAttribute("data-theme", theme);
+		localStorage.setItem("theme", theme);
+	}
 
-  async exportData() {
-    try {
-      const userId = this.app.currentUser.id;
+	async exportData() {
+		try {
+			const userId = this.app.currentUser.id;
 
-      const tasks = await fetch(`/api/tasks/${userId}`).then(r => r.json());
-      const projects = await fetch(`/api/projects/${userId}`).then(r => r.json());
-      const notes = await fetch(`/api/notes/${userId}`).then(r => r.json());
-      const goals = await fetch(`/api/goals/${userId}`).then(r => r.json());
-      const reminders = await fetch(`/api/reminders/${userId}`).then(r => r.json());
-      const bookmarks = await fetch(`/api/bookmarks/${userId}`).then(r => r.json());
+			const tasks = await fetch(`/api/tasks/${userId}`).then((r) => r.json());
+			const projects = await fetch(`/api/projects/${userId}`).then((r) =>
+				r.json(),
+			);
+			const notes = await fetch(`/api/notes/${userId}`).then((r) => r.json());
+			const goals = await fetch(`/api/goals/${userId}`).then((r) => r.json());
+			const reminders = await fetch(`/api/reminders/${userId}`).then((r) =>
+				r.json(),
+			);
+			const bookmarks = await fetch(`/api/bookmarks/${userId}`).then((r) =>
+				r.json(),
+			);
 
-      const data = {
-        user: this.app.currentUser,
-        exportDate: new Date().toISOString(),
-        tasks,
-        projects,
-        notes,
-        goals,
-        reminders,
-        bookmarks
-      };
+			const data = {
+				user: this.app.currentUser,
+				exportDate: new Date().toISOString(),
+				tasks,
+				projects,
+				notes,
+				goals,
+				reminders,
+				bookmarks,
+			};
 
-      const json = JSON.stringify(data, null, 2);
-      const blob = new Blob([json], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `pwa-backup-${new Date().getTime()}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Error exporting data:', error);
-      alert('Failed to export data');
-    }
-  }
+			const json = JSON.stringify(data, null, 2);
+			const blob = new Blob([json], { type: "application/json" });
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement("a");
+			a.href = url;
+			a.download = `pwa-backup-${new Date().getTime()}.json`;
+			a.click();
+			URL.revokeObjectURL(url);
+		} catch (error) {
+			console.error("Error exporting data:", error);
+			alert("Failed to export data");
+		}
+	}
 }
 
 // Initialize when app is ready
-document.addEventListener('DOMContentLoaded', () => {
-  if (window.app) {
-    window.settings = new SettingsModule(window.app);
-  }
+document.addEventListener("DOMContentLoaded", () => {
+	if (window.app) {
+		window.settings = new SettingsModule(window.app);
+	}
 });

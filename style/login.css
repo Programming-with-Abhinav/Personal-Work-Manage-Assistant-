@@ -13,7 +13,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Poppins', sans-serif;
+	font-family: "Poppins", sans-serif;
 }
 
 body {
@@ -31,7 +31,8 @@ body {
 	justify-content: center;
 	align-items: center;
 	padding: 40px;
-    background: url('../assets/Login-page-body-background.png') no-repeat center center fixed;
+	background: url("../assets/Login-page-body-background.png") no-repeat center
+		center fixed;
 	background-size: cover;
 	position: relative;
 	min-height: 100vh;
@@ -102,7 +103,9 @@ header {
 	flex-direction: column;
 	gap: 8px;
 	padding: 15px 30px;
-	transition: transform 0.3s ease, border-color 0.3s ease;
+	transition:
+		transform 0.3s ease,
+		border-color 0.3s ease;
 }
 
 .card:hover {
@@ -121,12 +124,12 @@ header {
 	border-radius: 18px;
 }
 
-.login-icon h2{
+.login-icon h2 {
 	font-size: 30px;
 }
 
 .login-icon i,
-.register-icon i{
+.register-icon i {
 	font-size: 25px;
 }
 

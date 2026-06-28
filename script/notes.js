@@ -4,46 +4,49 @@
  */
 
 class NotesModule {
-  constructor(app) {
-    this.app = app;
-    this.notes = [];
-    this.init();
-  }
+	constructor(app) {
+		this.app = app;
+		this.notes = [];
+		this.init();
+	}
 
-  async init() {
-    this.setupEventListeners();
-    await this.loadNotes();
-    this.renderNotes();
-  }
+	async init() {
+		this.setupEventListeners();
+		await this.loadNotes();
+		this.renderNotes();
+	}
 
-  setupEventListeners() {
-    const newNoteBtn = document.getElementById('newNoteBtn');
-    if (newNoteBtn) {
-      newNoteBtn.addEventListener('click', () => this.openNoteModal());
-    }
-  }
+	setupEventListeners() {
+		const newNoteBtn = document.getElementById("newNoteBtn");
+		if (newNoteBtn) {
+			newNoteBtn.addEventListener("click", () => this.openNoteModal());
+		}
+	}
 
-  async loadNotes() {
-    try {
-      const response = await fetch(`/api/notes/${this.app.currentUser.id}`);
-      this.notes = await response.json();
-    } catch (error) {
-      console.error('Error loading notes:', error);
-    }
-  }
+	async loadNotes() {
+		try {
+			const response = await fetch(`/api/notes/${this.app.currentUser.id}`);
+			this.notes = await response.json();
+		} catch (error) {
+			console.error("Error loading notes:", error);
+		}
+	}
 
-  renderNotes() {
-    const board = document.getElementById('notesBoard');
-    if (!board) return;
+	renderNotes() {
+		const board = document.getElementById("notesBoard");
+		if (!board) return;
 
-    if (this.notes.length === 0) {
-      board.innerHTML = '<p class="empty-state">No notes yet. Create one to get started!</p>';
-      return;
-    }
+		if (this.notes.length === 0) {
+			board.innerHTML =
+				'<p class="empty-state">No notes yet. Create one to get started!</p>';
+			return;
+		}
 
-    board.innerHTML = `
+		board.innerHTML = `
       <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px;">
-        ${this.notes.map(note => `
+        ${this.notes
+					.map(
+						(note) => `
           <div class="note-card" style="
             background: ${note.color};
             border-radius: 8px;
@@ -61,51 +64,62 @@ class NotesModule {
               <button class="btn btn-secondary" data-note-id="${note.id}" style="padding: 4px 8px; font-size: 11px;">Delete</button>
             </div>
           </div>
-        `).join('')}
+        `,
+					)
+					.join("")}
       </div>
     `;
-  }
+	}
 
-  openNoteModal() {
-    const title = prompt('Note title:');
-    if (!title) return;
+	openNoteModal() {
+		const title = prompt("Note title:");
+		if (!title) return;
 
-    const content = prompt('Note content:');
-    if (content === null) return;
+		const content = prompt("Note content:");
+		if (content === null) return;
 
-    this.createNote(title, content);
-  }
+		this.createNote(title, content);
+	}
 
-  async createNote(title, content) {
-    try {
-      const response = await fetch(`/api/notes/${this.app.currentUser.id}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title,
-          content,
-          color: this.getRandomColor()
-        })
-      });
+	async createNote(title, content) {
+		try {
+			const response = await fetch(`/api/notes/${this.app.currentUser.id}`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					title,
+					content,
+					color: this.getRandomColor(),
+				}),
+			});
 
-      if (response.ok) {
-        await this.loadNotes();
-        this.renderNotes();
-      }
-    } catch (error) {
-      console.error('Error creating note:', error);
-    }
-  }
+			if (response.ok) {
+				await this.loadNotes();
+				this.renderNotes();
+			}
+		} catch (error) {
+			console.error("Error creating note:", error);
+		}
+	}
 
-  getRandomColor() {
-    const colors = ['#FFD93D', '#FF6B6B', '#4ECDC4', '#95E1D3', '#F38181', '#EAFFD0', '#FCE77D', '#F8B500'];
-    return colors[Math.floor(Math.random() * colors.length)];
-  }
+	getRandomColor() {
+		const colors = [
+			"#FFD93D",
+			"#FF6B6B",
+			"#4ECDC4",
+			"#95E1D3",
+			"#F38181",
+			"#EAFFD0",
+			"#FCE77D",
+			"#F8B500",
+		];
+		return colors[Math.floor(Math.random() * colors.length)];
+	}
 }
 
 // Initialize when app is ready
-document.addEventListener('DOMContentLoaded', () => {
-  if (window.app) {
-    window.notes = new NotesModule(window.app);
-  }
+document.addEventListener("DOMContentLoaded", () => {
+	if (window.app) {
+		window.notes = new NotesModule(window.app);
+	}
 });

@@ -1,13 +1,13 @@
-let marks = [86,57,68,20,19];
+let marks = [86, 57, 68, 20, 19];
 
-let subject = ["Hindi","English","Mathematics","Physics","Chemistry"];
+let subject = ["Hindi", "English", "Mathematics", "Physics", "Chemistry"];
 
 let totalMarks = 0;
 let result = {};
 
 for (let i = 0; i < marks.length; i++) {
-    totalMarks += marks[i];
-    result[subject[i]] = marks[i];
+	totalMarks += marks[i];
+	result[subject[i]] = marks[i];
 }
 
 let avg = totalMarks / marks.length;

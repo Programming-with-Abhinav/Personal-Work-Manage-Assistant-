@@ -1,4 +1,5 @@
 # Personal Work Assistant (PWA)
+
 ## Premium Productivity Operating System
 
 A complete, production-quality personal productivity platform built with vanilla JavaScript, Node.js/Express, and JSON database. Inspired by Notion, Linear, ClickUp, Trello, and Arc Browser.
@@ -52,19 +53,23 @@ package.json     - Dependencies
 ## 🚀 Getting Started
 
 ### 1. Install Dependencies
+
 ```bash
 npm install
 ```
 
 ### 2. Start Server
+
 ```bash
 npm start
 ```
 
 ### 3. Open Browser
+
 Navigate to `http://localhost:3000`
 
 ### 4. Register/Login
+
 Create account or use existing credentials
 
 ---
@@ -72,12 +77,14 @@ Create account or use existing credentials
 ## 📚 API Endpoints
 
 ### Auth
+
 - `POST /api/auth/register` - Register
 - `POST /api/auth/login` - Login
 - `GET /api/auth/profile/:userId` - Get profile
 - `PUT /api/auth/profile/:userId` - Update profile
 
 ### CRUD Operations
+
 - `/api/tasks/:userId` - Tasks management
 - `/api/projects/:userId` - Projects management
 - `/api/notes/:userId` - Notes management
@@ -92,7 +99,7 @@ Create account or use existing credentials
 ✅ bcrypt password hashing  
 ✅ Unique user validation  
 ✅ Session persistence  
-✅ User data isolation  
+✅ User data isolation
 
 ---
 
