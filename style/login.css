@@ -13,47 +13,46 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: "Poppins", sans-serif;
+}
+
+html {
+	scroll-behavior: smooth;
 }
 
 body {
-	min-height: 100vh;
+	font-family: "Poppins", sans-serif;
+	min-height: 100dvh;
 	display: flex;
-	background: var(--bg);
-	color: var(--text);
 }
 
-/* RIGHT CONTENT SECTION */
+button,
+input {
+	font: inherit;
+}
+
 .content {
 	width: 100%;
 	display: flex;
-	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	padding: 40px;
-	background: url("../assets/Login-page-body-background.png") no-repeat center
-		center fixed;
-	background-size: cover;
-	position: relative;
-	min-height: 100vh;
+	background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
 	overflow-x: hidden;
 }
 
 header {
 	position: absolute;
 	top: 30px;
-	left: 50%;
-	transform: translateX(-50%);
+	left: 30px;
+	transform: translateY(-50%);
 	z-index: 5;
 }
 
-/* NAV BUTTONS */
 .nav-bar-btn {
-	position: absolute;
-	right: 380px;
+	width: 100%;
 	display: flex;
 	gap: 10px;
-	background: rgba(255, 255, 255, 0.25);
+	background-color: rgba(255, 255, 255, 0.05);
 	padding: 6px;
 	border-radius: 12px;
 	border: 1px solid var(--border);
@@ -90,7 +89,6 @@ header {
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* FORM CARD */
 .card {
 	width: min(440px, 100%);
 	backdrop-filter: blur(14px);
@@ -152,7 +150,6 @@ header {
 	line-height: 1.5;
 }
 
-/* INPUTS */
 .name,
 .passward,
 .email,
@@ -225,7 +222,6 @@ header {
 	cursor: pointer;
 }
 
-/* HELPER LINKS */
 .helper-row {
 	width: 100%;
 	display: flex;
@@ -250,7 +246,6 @@ header {
 	text-shadow: 0 0 8px rgba(34, 211, 238, 0.4);
 }
 
-/* MAIN BUTTON */
 .card button[type="submit"] {
 	width: 100%;
 	padding: 14px;
@@ -272,43 +267,110 @@ header {
 	filter: brightness(1.1);
 }
 
-/* HIDDEN FORM */
 .hidden {
 	display: none !important;
 }
 
-/* MOBILE RESPONSIVE */
-@media (max-width: 900px) {
+/* ========== Mobile (0px - 480px) ========== */
+@media (max-width: 480px) {
 	body {
-		flex-direction: column;
+		min-height: 100dvh;
 	}
 
 	.content {
-		width: 100%;
-		padding: 80px 20px 30px;
+		padding: 20px 15px;
 	}
 
 	header {
-		position: absolute;
-		top: 30px;
-		left: 50%;
-		transform: translateX(-50%);
-		margin-bottom: 25px;
-	}
-}
-
-@media (max-width: 500px) {
-	.card {
-		padding: 25px 20px;
-		border-radius: 20px;
-	}
-
-	.form-top h2 {
-		font-size: 24px;
+		top: 20px;
+		left: 15px;
+		transform: none;
 	}
 
 	.nav-bar-btn {
+		gap: 5px;
+		padding: 5px;
+	}
+
+	.nav-bar-btn button {
+		padding: 8px 14px;
+		font-size: 13px;
+	}
+
+	.card {
 		width: 100%;
-		justify-content: center;
+		padding: 20px;
+		border-radius: 20px;
+	}
+
+	.form-top h2,
+	.login-icon h2 {
+		font-size: 24px;
+	}
+
+	.subtext {
+		font-size: 14px;
+	}
+
+	.card input {
+		padding: 12px;
+		font-size: 14px;
+	}
+
+	.card button[type="submit"] {
+		padding: 12px;
+		font-size: 15px;
+	}
+
+	.helper-row {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+	}
+}
+
+/* ========== Tablet (481px - 768px) ========== */
+@media (min-width: 481px) and (max-width: 768px) {
+	.content {
+		padding: 30px;
+	}
+
+	header {
+		top: 25px;
+		left: 25px;
+		transform: none;
+	}
+
+	.card {
+		width: min(500px, 100%);
+		padding: 25px;
+	}
+
+	.form-top h2,
+	.login-icon h2 {
+		font-size: 26px;
+	}
+}
+
+/* ========== Small Laptop (769px - 1024px) ========== */
+@media (min-width: 769px) and (max-width: 1024px) {
+	.content {
+		padding: 40px;
+	}
+
+	.card {
+		width: min(480px, 100%);
+	}
+}
+
+/* ========== Large Desktop (1025px and above) ========== */
+@media (min-width: 1025px) {
+	.content {
+		padding: 50px;
+	}
+
+	.card {
+		width: 440px;
+		padding: 30px;
 	}
 }
