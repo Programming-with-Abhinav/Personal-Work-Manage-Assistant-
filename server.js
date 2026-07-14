@@ -21,6 +21,8 @@ const notesFile = path.join(dataDir, "notes.json");
 const goalsFile = path.join(dataDir, "goals.json");
 const remindersFile = path.join(dataDir, "reminders.json");
 const bookmarksFile = path.join(dataDir, "bookmarks.json");
+const meetingsFile = path.join(dataDir, "meetings.json");
+const paymentsFile = path.join(dataDir, "payments.json");
 
 // Utility functions
 const readJSON = (filePath) => {
@@ -45,17 +47,17 @@ const generateId = () => {
 // Register
 app.post("/api/auth/register", async (req, res) => {
 	try {
-		const { username, email, password } = req.body;
+		const { username, email, password, phone, pincode } = req.body;
 
 		// Validation
-		if (!username || !email || !password) {
+		if (!username || !email || !password || !pincode) {
 			return res.status(400).json({ error: "Missing required fields" });
 		}
 
 		let users = readJSON(usersFile);
 
 		// Check if user exists
-		if (users.some((u) => u.email === email || u.username === username)) {
+		if (users.some((u) => u.email === email)) {
 			return res.status(409).json({ error: "User already exists" });
 		}
 
@@ -66,6 +68,8 @@ app.post("/api/auth/register", async (req, res) => {
 			id: generateId(),
 			username,
 			email,
+			phone: phone || "",
+			pincode,
 			passwordHash,
 			createdAt: new Date().toISOString(),
 			role: "user",
@@ -126,6 +130,55 @@ app.post("/api/auth/login", async (req, res) => {
 				profile: user.profile,
 			},
 		});
+	} catch (error) {
+		res.status(500).json({ error: "Server error" });
+	}
+});
+
+// Verify reset credentials (email and pincode)
+app.post("/api/auth/verify-reset", (req, res) => {
+	try {
+		const { email, pincode } = req.body;
+
+		if (!email || !pincode) {
+			return res.status(400).json({ error: "Missing email or pincode" });
+		}
+
+		let users = readJSON(usersFile);
+		const user = users.find((u) => u.email === email && String(u.pincode) === String(pincode));
+
+		if (!user) {
+			return res.status(401).json({ error: "Verification failed. Incorrect email or pincode." });
+		}
+
+		res.json({ message: "Identity verified successfully" });
+	} catch (error) {
+		res.status(500).json({ error: "Server error" });
+	}
+});
+
+// Update password after reset verification
+app.post("/api/auth/reset-password", async (req, res) => {
+	try {
+		const { email, newPassword } = req.body;
+
+		if (!email || !newPassword) {
+			return res.status(400).json({ error: "Missing email or password" });
+		}
+
+		let users = readJSON(usersFile);
+		const userIndex = users.findIndex((u) => u.email === email);
+
+		if (userIndex === -1) {
+			return res.status(404).json({ error: "User not found" });
+		}
+
+		// Hash new password
+		const passwordHash = await bcrypt.hash(newPassword, 10);
+		users[userIndex].passwordHash = passwordHash;
+		writeJSON(usersFile, users);
+
+		res.json({ message: "Password updated successfully" });
 	} catch (error) {
 		res.status(500).json({ error: "Server error" });
 	}
@@ -704,6 +757,193 @@ app.delete("/api/bookmarks/:userId/:bookmarkId", (req, res) => {
 		writeJSON(bookmarksFile, bookmarks);
 
 		res.json({ message: "Bookmark deleted successfully" });
+	} catch (error) {
+		res.status(500).json({ error: "Server error" });
+	}
+});
+
+// ==================== MEETINGS ROUTES ====================
+
+// Get all meetings for user
+app.get("/api/meetings/:userId", (req, res) => {
+	try {
+		const { userId } = req.params;
+		let meetings = readJSON(meetingsFile);
+		const userMeetings = meetings[userId] || [];
+		res.json(userMeetings);
+	} catch (error) {
+		res.status(500).json({ error: "Server error" });
+	}
+});
+
+// Create meeting
+app.post("/api/meetings/:userId", (req, res) => {
+	try {
+		const { userId } = req.params;
+		const { title, dateTime, attendees, agenda, category, status, location } = req.body;
+
+		let meetings = readJSON(meetingsFile);
+		if (!meetings[userId]) meetings[userId] = [];
+
+		const newMeeting = {
+			id: generateId(),
+			title,
+			dateTime,
+			attendees: attendees || "",
+			agenda: agenda || "",
+			category: category || "general",
+			status: status || "scheduled",
+			location: location || "",
+			createdAt: new Date().toISOString(),
+			updatedAt: new Date().toISOString(),
+		};
+
+		meetings[userId].push(newMeeting);
+		writeJSON(meetingsFile, meetings);
+
+		res.status(201).json(newMeeting);
+	} catch (error) {
+		res.status(500).json({ error: "Server error" });
+	}
+});
+
+// Update meeting
+app.put("/api/meetings/:userId/:meetingId", (req, res) => {
+	try {
+		const { userId, meetingId } = req.params;
+		let meetings = readJSON(meetingsFile);
+
+		if (!meetings[userId]) {
+			return res.status(404).json({ error: "No meetings found" });
+		}
+
+		const meetingIndex = meetings[userId].findIndex((m) => m.id === meetingId);
+		if (meetingIndex === -1) {
+			return res.status(404).json({ error: "Meeting not found" });
+		}
+
+		meetings[userId][meetingIndex] = {
+			...meetings[userId][meetingIndex],
+			...req.body,
+			updatedAt: new Date().toISOString(),
+		};
+
+		writeJSON(meetingsFile, meetings);
+		res.json(meetings[userId][meetingIndex]);
+	} catch (error) {
+		res.status(500).json({ error: "Server error" });
+	}
+});
+
+// Delete meeting
+app.delete("/api/meetings/:userId/:meetingId", (req, res) => {
+	try {
+		const { userId, meetingId } = req.params;
+		let meetings = readJSON(meetingsFile);
+
+		if (!meetings[userId]) {
+			return res.status(404).json({ error: "No meetings found" });
+		}
+
+		meetings[userId] = meetings[userId].filter((m) => m.id !== meetingId);
+		writeJSON(meetingsFile, meetings);
+
+		res.json({ message: "Meeting deleted successfully" });
+	} catch (error) {
+		res.status(500).json({ error: "Server error" });
+	}
+});
+
+// ==================== PAYMENTS ROUTES ====================
+
+// Get all payments for user
+app.get("/api/payments/:userId", (req, res) => {
+	try {
+		const { userId } = req.params;
+		let payments = readJSON(paymentsFile);
+		const userPayments = payments[userId] || [];
+		res.json(userPayments);
+	} catch (error) {
+		res.status(500).json({ error: "Server error" });
+	}
+});
+
+// Create payment
+app.post("/api/payments/:userId", (req, res) => {
+	try {
+		const { userId } = req.params;
+		const { type, party, amount, dueDate, description, status } = req.body;
+
+		let payments = readJSON(paymentsFile);
+		if (!payments[userId]) payments[userId] = [];
+
+		const newPayment = {
+			id: generateId(),
+			type, // 'payable' or 'receivable'
+			party,
+			amount: parseFloat(amount) || 0,
+			dueDate,
+			description: description || "",
+			status: status || "pending",
+			createdAt: new Date().toISOString(),
+			updatedAt: new Date().toISOString(),
+		};
+
+		payments[userId].push(newPayment);
+		writeJSON(paymentsFile, payments);
+
+		res.status(201).json(newPayment);
+	} catch (error) {
+		res.status(500).json({ error: "Server error" });
+	}
+});
+
+// Update payment
+app.put("/api/payments/:userId/:paymentId", (req, res) => {
+	try {
+		const { userId, paymentId } = req.params;
+		let payments = readJSON(paymentsFile);
+
+		if (!payments[userId]) {
+			return res.status(404).json({ error: "No payments found" });
+		}
+
+		const paymentIndex = payments[userId].findIndex((p) => p.id === paymentId);
+		if (paymentIndex === -1) {
+			return res.status(404).json({ error: "Payment not found" });
+		}
+
+		if (req.body.amount !== undefined) {
+			req.body.amount = parseFloat(req.body.amount) || 0;
+		}
+
+		payments[userId][paymentIndex] = {
+			...payments[userId][paymentIndex],
+			...req.body,
+			updatedAt: new Date().toISOString(),
+		};
+
+		writeJSON(paymentsFile, payments);
+		res.json(payments[userId][paymentIndex]);
+	} catch (error) {
+		res.status(500).json({ error: "Server error" });
+	}
+});
+
+// Delete payment
+app.delete("/api/payments/:userId/:paymentId", (req, res) => {
+	try {
+		const { userId, paymentId } = req.params;
+		let payments = readJSON(paymentsFile);
+
+		if (!payments[userId]) {
+			return res.status(404).json({ error: "No payments found" });
+		}
+
+		payments[userId] = payments[userId].filter((p) => p.id !== paymentId);
+		writeJSON(paymentsFile, payments);
+
+		res.json({ message: "Payment deleted successfully" });
 	} catch (error) {
 		res.status(500).json({ error: "Server error" });
 	}
